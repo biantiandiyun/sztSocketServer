@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.lakala.com/amber/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+    name="body">
+    <!-- 安全域状态同步请求 -->
+    <varString name="Msisdn" type="BB"/>
+    <varhexstring name="SeId" type="BB"/>
+    <hexstring name="VendorCode" length="2"/>
+    <varhexstring name="AID" type="BB"/>
+    <hexstring name="LCS" length="1"/>
+</segment>

@@ -1,0 +1,135 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:a="http://www.lakala.com/schema/amber-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.lakala.com/schema/amber-core http://www.lakala.com/schema/amber-core-1.0.xsd">
+
+    <bean id="sztTransport" class="com.lakala.ips.router.szt.SztTransport">
+        <property name="gateway">
+            <bean class="com.lakala.ips.router.szt.ManualSocketGateway">
+                <!--测试地址：219.239.243.149 端口：10012（开发）12001（测试）
+                	 生产地址：www.opentsm.cn 端口：7003-->
+                <property name="host" value="219.239.243.149"></property>
+                <property name="port" value="12001"></property>
+                <property name="connectTimeout" value="100000"></property>
+                <property name="soTimeout" value="100000"/>
+                <property name="payloadResolver">
+                    <bean class="com.lakala.amber.channel.stream.LengthPayloadResolver">
+                    	<property name="numberConverter">
+                    		<bean class="com.lakala.amber.channel.stream.ByteLengthConvert"/>
+                    	</property>
+                        <property name="lengthOffset" value="0"></property>
+                        <property name="lengthSize" value="4"></property>
+                        <property name="lengthAddtive" value="-4"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="encodeTransform">
+            <bean class="com.lakala.amber.channel.TransformChain">
+                <property name="transforms">
+                    <array>
+                        <bean class="com.lakala.amber.channel.stream.TransformEncoder">
+                            <constructor-arg value="packet://classpath:META-INF/szt/xml/FormatOutbound.xml" />
+                        </bean>
+                        <bean class="com.lakala.ips.router.szt.HeaderEncoder">
+                        </bean>
+                    </array>
+                </property>
+            </bean>
+        </property>
+        <property name="decodeTransform">
+            <bean class="com.lakala.amber.channel.TransformChain">
+                <property name="transforms">
+                    <array>
+                          <bean class="com.lakala.ips.router.szt.HeaderDecoder"></bean>
+                          <bean class="com.lakala.amber.channel.stream.TransformDecoder">
+                              <constructor-arg value="packet://classpath:META-INF/szt/xml/ParseOutbound.xml" />
+                          </bean>
+                    </array>
+                </property>
+            </bean>
+        </property>
+        <property name="validator">
+            <bean class="com.lakala.ips.router.szt.StdReturnCodeValidator">
+                <property name="successReturnCode" value="00000000,02000000"></property>
+                <property name="keyName" value="ReturnCode"></property>
+                <property name="messageKeyName" value="ResultDesc"></property>
+                <property name="errorKeyPrefix" value=""></property>
+            </bean>
+        </property>
+        <!--<property name="serialIdCreator" ref="sztSerialIdCreator"></property>-->
+    </bean>
+
+    <bean id="sztTransportShortConn" class="com.lakala.ips.router.szt.SztTransportShortConn">
+        <property name="gateway">
+            <bean class="com.lakala.amber.channel.tcp.SocketGateway">
+                <!--测试地址：219.239.243.149 端口：10012（开发）12001（测试）
+                 	生产地址：www.opentsm.cn 端口：7003-->
+                <property name="host" value="219.239.243.149"></property>
+                <property name="port" value="12001"></property>
+                <property name="connectTimeout" value="100000"></property>
+                <property name="soTimeout" value="100000"/>
+                <property name="payloadResolver">
+                    <bean class="com.lakala.amber.channel.stream.LengthPayloadResolver">
+                        <property name="numberConverter">
+                            <bean class="com.lakala.amber.channel.stream.ByteLengthConvert"/>
+                        </property>
+                        <property name="lengthOffset" value="0"></property>
+                        <property name="lengthSize" value="4"></property>
+                        <property name="lengthAddtive" value="-4"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="encodeTransform">
+            <bean class="com.lakala.amber.channel.TransformChain">
+                <property name="transforms">
+                    <array>
+                        <bean class="com.lakala.amber.channel.stream.TransformEncoder">
+                            <constructor-arg value="packet://classpath:META-INF/szt/xml/FormatOutbound.xml" />
+                        </bean>
+                        <bean class="com.lakala.ips.router.szt.HeaderEncoder">
+                        </bean>
+                    </array>
+                </property>
+            </bean>
+        </property>
+        <property name="decodeTransform">
+            <bean class="com.lakala.amber.channel.TransformChain">
+                <property name="transforms">
+                    <array>
+                        <bean class="com.lakala.ips.router.szt.HeaderDecoder"></bean>
+                        <bean class="com.lakala.amber.channel.stream.TransformDecoder">
+                            <constructor-arg value="packet://classpath:META-INF/szt/xml/ParseOutbound.xml" />
+                        </bean>
+                    </array>
+                </property>
+            </bean>
+        </property>
+        <property name="validator">
+            <bean class="com.lakala.ips.router.szt.StdReturnCodeValidator">
+                <property name="successReturnCode" value="00000000,02000000"></property>
+                <property name="keyName" value="ReturnCode"></property>
+                <property name="messageKeyName" value="ErrorInfo"></property>
+                <property name="errorKeyPrefix" value=""></property>
+            </bean>
+        </property>
+       <!-- <property name="serialIdCreator" ref="sztSerialIdCreator"></property>-->
+    </bean>
+
+
+    <bean id="macUtil" class="com.lakala.ips.router.szt.MacUtil"/>
+
+    <!--<bean id="uniqueIdTable" class="com.lakala.amber.service.id.seq.SequenceTable" init-method="init">-->
+    <!--&lt;!&ndash;<property name="dataSource" ref="dataSource"/>&ndash;&gt;-->
+    <!--<property name="tableName" value="UniqueId"></property>-->
+<!--</bean>-->
+    <!--<bean id="sztSerialIdCreator" class="com.lakala.amber.service.id.seq.StepSequenceFactory">-->
+        <!--<property name="table" ref="uniqueIdTable" />-->
+        <!--<property name="type" value="SZ" />-->
+        <!--<property name="format" value="{####}" />-->
+        <!--<property name="step" value="10" />-->
+        <!--<property name="dateCutoff" value="true" />-->
+    <!--</bean>-->
+
+</beans>

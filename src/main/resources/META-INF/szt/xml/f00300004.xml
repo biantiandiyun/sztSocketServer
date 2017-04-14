@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.lakala.com/amber/transformer/packet"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+         name="body">
+    <!-- 卡片响应结果通知请求 -->
+    <varString name="Mobile" type="BB"/>
+    <varhexstring name="SeId" type="BB"/>
+    <varhexstring name="Aid" type="BB"/>
+    <fixString name="AppVersion" length="5" default="1.0.0"/>
+    <!-- rapdu -->
+    <segment name="RapdusLength" type="BB">
+        <loop name="RApdus" count="B">
+            <segment name="rapdu">
+                <bbyte name="ApduIndex" />
+                <varhexstring name="RApdu" type="BB"/>
+            </segment>
+        </loop>
+    </segment>
+    <hexstring name="Result" length="1"/>
+</segment>

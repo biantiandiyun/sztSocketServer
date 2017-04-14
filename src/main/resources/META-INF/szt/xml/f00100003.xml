@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.lakala.com/amber/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+    name="body">
+    <varString name="Msisdn" type="BB"/>
+    <varhexstring name="SeId" type="BB"/>
+    <varhexstring name="UserAccountId" type="BB"/>
+    <varhexstring name="IIN" type="BB"/>
+    <varhexstring name="CIN" type="BB"/>
+    <hexstring name="VendorCode" length="2"/>
+    <varhexstring name="AID" type="BB"/>
+    <fixString name="AppletVersion" length="5"/>
+    <hexstring name="ServiceType" length="1"/>
+    <varString name="HModel" type="BB"/>
+    <varString name="HOsVersion" type="BB"/>
+     <varString name="BasebandVersion" type="BB"/>
+     <varString name="IMEI" type="BB"/>
+    <varhexstring name="SeType" type="BB"/>
+    <varString name="UserName" type="BB"/>
+    <hexstring name="UserIDType" length="2"/>
+    <varString name="UserID" type="BB"/>
+    <varString name="ExtraditeCode" type="BB"/>
+    <varString name="AppSignatrue" type="BB"/>
+    <varString name="SeCosVersion" type="BB"/>
+    <hexstring name="OrderIDType" length="1"/>
+    <varString name="OrderID" type="BB"/>
+</segment>

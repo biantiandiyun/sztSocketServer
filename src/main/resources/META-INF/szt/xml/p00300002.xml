@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.lakala.com/amber/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+    name="body">
+    <varString name="ResultDesc" type="BB" encoding="utf-16"/>
+</segment>

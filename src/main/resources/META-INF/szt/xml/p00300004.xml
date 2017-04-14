@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.lakala.com/amber/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+    name="body">
+    <segment name="_apdus" type="BB">
+        <loop name="CApdus" count="B">
+         <segment name="capdu">
+             <bbyte name="ApduIndex" />
+             <varhexstring name="CApdu" type="BB"/>
+             <varbytes name="Swes" type="BB" format="none" optional="true"/>
+            </segment>
+        </loop>
+    </segment>
+    <varString name="ResultDesc" type="BB" encoding="utf-16"/>
+</segment>

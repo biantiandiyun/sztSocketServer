@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.lakala.com/amber/transformer/packet" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.lakala.com/amber/transformer/packet packet.xsd"
+    type="BBBB" encoding="iso-8859-1" >
+    
+	<segment name="Header">
+        <bbyte name="Version" /><!-- unsigned integer  1-bbyte 2-bshort 4-bint 8-blong -->
+        <!--  <bytes name="MAC" length="8" format="none"/>--><!-- 此处忽略，在headerEncode中计算 -->
+        <hexstring name="CommandId" length="4" /><!-- hex string -->
+        <hexstring name="SequenceId" length="8"/>
+        <fixString name="Spid" length="8" default="20151228"/> <!-- Octet String -->
+    </segment>
+    <include name="N" keys="TransCode" encodePrefix="f"
+            decodePrefix="p" />
+</message>
